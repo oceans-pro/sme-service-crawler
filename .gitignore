@@ -1,0 +1,6 @@
+node_modules
+data/*.md
+data/*.json
+data/*.docx
+
+package-lock.json
