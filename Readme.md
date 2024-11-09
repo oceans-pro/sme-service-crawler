@@ -17,11 +17,11 @@ node 1-fetch.js
 在 **爬虫 & 存储** 的基础上, 还需要安装 `pandoc`。 (https://pandoc.org/installing.html)
 
 ``` sh
-npm i
+npm i # 安装nodejs依赖
 ```
 
 ```sh
-node ./2-json-to-md.js # 这一步需要nodejs依赖
+node ./2-json-to-md.js # 这一步需要nodejs依赖!!
 ```
 
 ```sh

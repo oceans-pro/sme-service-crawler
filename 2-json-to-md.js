@@ -27,9 +27,9 @@ function toJSON(listData, fileName) {
         // 标题
         const title = item['标题'];
         str += `# ${title}\n`;
-    
+
         // 附加信息
-        const metaInfo = ['发布时间', '机构或省份', '应用类型', '链接', '原始链接', '政策主题', '来源'].reduce((acc, cur) => {
+        const metaInfo = ['机构或省份', '来源'].reduce((acc, cur) => {
             const value = item[cur];
             if (value) {
                 acc += `\n${cur}：${item[cur]}\n`;
@@ -51,5 +51,5 @@ function toJSON(listData, fileName) {
     });
 }
 
-toJSON(list.filter(i => i.政策级别 === '国家'), './data/output-1.md');
-toJSON(list.filter(i => i.政策级别 === '地方'), './data/output-2.md');
+toJSON(list.filter(i => i.政策级别 === '国家'), './data/国家.md');
+toJSON(list.filter(i => i.政策级别 === '地方'), './data/地方.md');

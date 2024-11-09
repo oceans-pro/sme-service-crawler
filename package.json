@@ -1,4 +1,11 @@
 {
+	"scripts": {
+		"fetch": "node ./1-fetch.js",
+		"md": "node ./2-json-to-md",
+		"w1": "pandoc ./data/国家.md -o ./data/国家.docx",
+		"w2": "pandoc ./data/地方.md -o ./data/地方.docx",
+		"del": "rm -rf ./data/*"
+	},
 	"dependencies": {
 		"cheerio": "^1.0.0"
 	}

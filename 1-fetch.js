@@ -51,7 +51,7 @@ async function sleep(timeout = 1000) {
         }, timeout);
     });
 }
-async function fetchOnePage(page, keyword, num = 1) {
+async function fetchOnePage(page = 1, {subject, keywordNum, keyword = ''}) {
     const pagesize = 8;
     const res = await fetch(
         `https://www.sme-service.cn/zzf/1/policy/findList?pagesize=${pagesize}&currentPage=${page}&from=0`,
@@ -61,7 +61,7 @@ async function fetchOnePage(page, keyword, num = 1) {
                 pAnalyseState: '',
                 pArticleState: '',
                 applicationType: '',
-                subject: '',
+                subject,
                 queryYear: '',
                 orderBy: 'PUBLISH_TIME',
                 policyState: 1,
@@ -73,9 +73,14 @@ async function fetchOnePage(page, keyword, num = 1) {
     );
     const data = (await res.json()).data;
     const list = data.list || [];
-    const matchedList = list.filter(item => {
-        return item.content && item.content.includes(keyword) && countKeywordInString(item.content, keyword) >= num;
-    });
+    let matchedList = [];
+    if (keyword && keywordNum) {
+        matchedList = list.filter(item => {
+            return item.content && item.content.includes(keyword) && countKeywordInString(item.content, keyword) >= num;
+        });    
+    } else if (subject) {
+        matchedList = list;
+    }
     
     console.info(`爬取第 ${page}/${data.pages} 页成功, ` + `符合条件的的文章有 ${matchedList.length} 个。`);
     const result = [];
@@ -165,20 +170,20 @@ function countKeywordInString(str = '', keyword = '') {
 }
 
 (async () => {
-    const keyword = '营商环境';
     const startPage = 1;
-    const pageSize = 1198;
-    // const pageSize = 3;
+    // 这个页数目前先通过网站看
+    const pageSize = 1180;
     const db = new JsonDB({reset: true});
 
     for(let i = startPage; i <= pageSize; i++) {
-        const list = await fetchOnePage(i, keyword, 3);
+        const list = await fetchOnePage(i, {
+            subject: "10570014"
+        });
         for (const item of list) {
             // delete item.content
             delete item.id;
             db.saveItem(item);
         }
-        await sleep(Math.random() * 300);
+        // await sleep(Math.random() * 300);
     }
 })();
-
