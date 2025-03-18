@@ -101,19 +101,19 @@ json.forEach((i) => {
                             });
                         }),
                         // Year as normal paragraph
-                        new Paragraph({
-                            text: '发布时间: ' + i.publishTime,
-                            alignment: 'left',
-                        }),
+                        // new Paragraph({
+                        //     text: '发布时间: ' + i.publishTime,
+                        //     alignment: 'left',
+                        // }),
                         // URL paragraph
-                        new Paragraph({
-                            text: `链接: https://www.sme-service.cn/#/detail?id=${i.id}&num=0`,
-                            alignment: 'left',
-                        }),
-                        new Paragraph({
-                            text: `原始链接: ${i.url || '暂无'}`,
-                            alignment: 'left',
-                        }),
+                        // new Paragraph({
+                        //     text: `链接: https://www.sme-service.cn/#/detail?id=${i.id}&num=0`,
+                        //     alignment: 'left',
+                        // }),
+                        // new Paragraph({
+                        //     text: `原始链接: ${i.url || '暂无'}`,
+                        //     alignment: 'left',
+                        // }),
                     ].filter(Boolean),
                 },
             ],
