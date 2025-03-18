@@ -53,6 +53,7 @@ const procItemMapper = (item) => {
     }
     result.text = para;
     result.title = item.title;
+    result.url = item.url;
     return result;
 };
 

@@ -31,9 +31,9 @@ json.forEach((i) => {
                                     // - `'FangSong'` - 仿宋
                                     // - `'SimHei'` - 黑体
                                     font: 'SimHei', // 楷体
-                                    bold: true // 可选:设置为粗体
-                                })
-                            ]
+                                    bold: true, // 可选:设置为粗体
+                                }),
+                            ],
                         }),
                         // Empty paragraph for spacing
                         new Paragraph({
@@ -42,6 +42,57 @@ json.forEach((i) => {
                                 after: 400,
                             },
                         }),
+                        // Main text split into paragraphs
+                        ...i.text.split('\n').map((line) => {
+                            let currentPos = 0;
+                            const lineResults = [];
+                            
+                            // 查找每个关键词
+                            i.keywords.forEach(kw => {
+                                let pos = line.indexOf(kw, currentPos);
+                                while (pos !== -1) {
+                                    // 添加关键词前的普通文本
+                                    if (pos > currentPos) {
+                                        lineResults.push(
+                                            new TextRun({
+                                                text: line.slice(currentPos, pos),
+                                                font: 'SimSun'
+                                            })
+                                        );
+                                    }
+                                    // 添加高亮的关键词
+                                    lineResults.push(
+                                        new TextRun({
+                                            text: kw,
+                                            shading: {
+                                                fill: '#ffff00', // 黄色
+                                            },
+                                            font: 'SimSun'
+                                        })
+                                    );
+                                    currentPos = pos + kw.length;
+                                    pos = line.indexOf(kw, currentPos);
+                                }
+                            });
+                            
+                            // 添加剩余的文本
+                            if (currentPos < line.length) {
+                                lineResults.push(
+                                    new TextRun({
+                                        text: line.slice(currentPos),
+                                        font: 'SimSun'
+                                    })
+                                );
+                            }
+                            
+                            // 返回一个新的段落
+                            return new Paragraph({
+                                children: lineResults,
+                                spacing: {
+                                    after: 50 // 段落间距
+                                }
+                            });
+                        }),
                         // Year as normal paragraph
                         new Paragraph({
                             text: '发布时间: ' + i.publishTime,
@@ -49,19 +100,14 @@ json.forEach((i) => {
                         }),
                         // URL paragraph
                         new Paragraph({
-                            text: `·链接: https://www.sme-service.cn/#/detail?id=${i.id}&num=0`,
+                            text: `链接: https://www.sme-service.cn/#/detail?id=${i.id}&num=0`,
                             alignment: 'left',
                         }),
-                        // Main text with double line break
                         new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: i.text,
-                                    break: 2,
-                                }),
-                            ],
+                            text: `原始链接: ${i.url || '暂无'}`,
+                            alignment: 'left',
                         }),
-                    ],
+                    ].filter(Boolean),
                 },
             ],
         });
