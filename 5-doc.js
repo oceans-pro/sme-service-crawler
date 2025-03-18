@@ -9,7 +9,8 @@ json.forEach((i) => {
         const dir = pth.join(__dirname, './word/' + kw + '/' + i.unit + '/' + i.subjectName);
         const fileName = i.title.trim().replaceAll(' ', '') + '.docx';
         const filePath = pth.join(dir, fileName);
-
+        i.text = i.text.replaceAll('㐀', '');
+        i.text = i.text.replace(/\n+/g, '\n');
         // Create Word document
         const doc = new Document({
             sections: [
@@ -44,6 +45,7 @@ json.forEach((i) => {
                         }),
                         // Main text split into paragraphs
                         ...i.text.split('\n').map((line) => {
+                            line = line.replace(/\s+/g, ' ')
                             let currentPos = 0;
                             const lineResults = [];
                             
@@ -89,7 +91,12 @@ json.forEach((i) => {
                             return new Paragraph({
                                 children: lineResults,
                                 spacing: {
-                                    after: 50 // 段落间距
+                                    after: 50, // 段落间距
+                                    line: 360, // 1.5倍行距 (240 * 1.5)
+                                    lineRule: 'exact'
+                                },
+                                indent: {
+                                    firstLine: 480 // 首行缩进2个中文字符 (约240 * 2)
                                 }
                             });
                         }),
