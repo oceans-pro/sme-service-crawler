@@ -7,7 +7,7 @@ const { countKeywordInString } = require('./utils/proc');
 const { getGovCodeList } = require('./utils/config');
 console.log('Start processing data...');
 
-const classKeyword = ['普惠', '科技金融', '民营经济'];
+const classKeyword = ['普惠金融', '科技金融', '民营'];
 
 const procItemMapper = (item) => {
     const result = {
