@@ -66,9 +66,10 @@ json.forEach((i) => {
                                     lineResults.push(
                                         new TextRun({
                                             text: kw,
-                                            shading: {
-                                                fill: '#ffff00', // 黄色
-                                            },
+                                            // color: '#ffff00', // 红色
+                                            // shading: {
+                                            //     fill: '#ffff00', // 黄色
+                                            // },
                                             font: 'SimSun'
                                         })
                                     );

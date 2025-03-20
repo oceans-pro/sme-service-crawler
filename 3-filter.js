@@ -7,7 +7,7 @@ const { countKeywordInString } = require('./utils/proc');
 const { getGovCodeList } = require('./utils/config');
 console.log('Start processing data...');
 
-const classKeyword = ['普惠金融', '科技金融', '民营经济'];
+const classKeyword = ['普惠', '科技金融', '民营经济'];
 
 const procItemMapper = (item) => {
     const result = {
@@ -48,6 +48,12 @@ const procItemMapper = (item) => {
             result.keywords = [...result.keywords, c1];
         }
     });
+    if (countKeywordInString(para,'专精特新') >= 1 && countKeywordInString(para, '融资') >= 1) {
+        if (!result.keywords.includes('科技金融')) {
+            result.keywords = [...result.keywords, '科技金融'];
+        }
+    }
+
     if (item.publishTime) {
         result.publishTime = item.publishTime.split(' ')[0];
     }
