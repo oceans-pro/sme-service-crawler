@@ -100,4 +100,4 @@ async function sum() {
     }
 }
 
-sum();
+// sum();

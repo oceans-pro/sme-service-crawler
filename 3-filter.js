@@ -42,16 +42,15 @@ const procItemMapper = (item) => {
             return $(el).text();
         }),
     ].join('\n\n');
-    classKeyword.forEach((c1) => {
-        const count = countKeywordInString(para, c1);
-        if (count >= 1) {
-            result.keywords = [...result.keywords, c1];
-        }
-    });
-    if (countKeywordInString(para,'专精特新') >= 1 && countKeywordInString(para, '融资') >= 1) {
-        if (!result.keywords.includes('科技金融')) {
-            result.keywords = [...result.keywords, '科技金融'];
-        }
+
+    if (countKeywordInString(para,'普惠金融') >= 1) {
+        result.keywords.push('普惠金融');
+    }
+    if (countKeywordInString(para,'科技金融') >= 1 || (countKeywordInString(para,'专精特新') >= 1 && countKeywordInString(para, '融资') >= 1)) {
+        result.keywords.push('科技金融');
+    }
+    if (countKeywordInString(para,'民营') >= 1) {
+        result.keywords.push('民营经济');
     }
 
     if (item.publishTime) {
@@ -60,6 +59,7 @@ const procItemMapper = (item) => {
     result.text = para;
     result.title = item.title;
     result.url = item.url;
+    result.publishNo = item.publishNo;
     return result;
 };
 

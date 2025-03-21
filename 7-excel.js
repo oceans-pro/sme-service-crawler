@@ -13,8 +13,10 @@ function exportToExcel(keyword) {
         单位: item.unit,
         主题: item.subjectName,
         发布时间: item.publishTime,
-        链接: `https://www.sme-service.cn/#/detail?id=${item.id}&num=0`,
+        原始链接: item.url || `https://www.sme-service.cn/#/detail?id=${item.id}&num=0`,
+        sme链接: `https://www.sme-service.cn/#/detail?id=${item.id}&num=0`,
         总结: item.summary,
+        发文号: item.publishNo,
     }));
 
     // 创建 Excel 工作簿
@@ -33,6 +35,6 @@ function exportToExcel(keyword) {
 
 // 示例用法
 exportToExcel('科技金融');
-exportToExcel('普惠');
+exportToExcel('普惠金融');
 exportToExcel('民营经济');
 
